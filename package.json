@@ -1,7 +1,7 @@
 {
-  "name": "nextra-docs-template",
+  "name": "polodb-docs",
   "version": "0.0.1",
-  "description": "Nextra docs template",
+  "description": "Documentations for PoloDB",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -9,15 +9,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shuding/nextra-docs-template.git"
+    "url": "git+https://github.com/vincentdchan/PoloDB.git"
   },
-  "author": "Shu Ding <g@shud.in>",
+  "author": "Vincent Chen <okcdz@diverse.space>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/shuding/nextra-docs-template/issues"
+    "url": "https://github.com/vincentdchan/PoloDB/issues"
   },
-  "homepage": "https://github.com/shuding/nextra-docs-template#readme",
+  "homepage": "https://github.com/vincentdchan/PoloDB",
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/icons-material": "^5.11.0",
+    "@mui/material": "^5.11.3",
     "next": "^13.0.6",
     "nextra": "2.0.1",
     "nextra-theme-docs": "2.0.1",
