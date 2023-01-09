@@ -1,0 +1,15 @@
+# Insert
+
+```rust
+use std::rc::Rc;
+use polodb_core::Database;
+use polodb_bson::doc;
+
+let mut db = Database::open_file("/tmp/test-collection").unwrap();
+let mut collection = db.collection("test").unwrap();
+collection.insert(doc! {
+    "_id": 0,
+    "name": "Vincent Chan",
+    "score": 99.99,
+}.as_mut());
+```

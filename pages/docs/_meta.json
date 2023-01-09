@@ -2,9 +2,8 @@
   "index": "Introduction",
   "installation": "Installation",
   "quick-start": "Quick start",
-  "query": "Query",
-  "update": "Update",
-  "advanced": "Advanced (A Folder)",
+  "curd": "CURD",
+  "advanced": "Advanced",
   "contact": {
     "title": "Contact ↗",
     "type": "page",

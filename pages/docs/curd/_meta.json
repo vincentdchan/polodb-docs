@@ -1,0 +1,6 @@
+{
+  "insert": "Insert",
+  "query": "Query",
+  "update": "update",
+  "delete": "Delete"
+}
