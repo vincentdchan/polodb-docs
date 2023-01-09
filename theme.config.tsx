@@ -29,7 +29,6 @@ const config: DocsThemeConfig = {
       <span>PoloDB</span>
       <Head>
         <link rel="shortcut icon" href="/static/favicon.ico" />
-        <GAScript />
       </Head>
     </>
   ),
@@ -42,6 +41,9 @@ const config: DocsThemeConfig = {
   docsRepositoryBase: "https://github.com/vincentdchan/polodb-docs",
   footer: {
     text: `Copyright © ${new Date().getFullYear()} Vincent Chen`,
+  },
+  navbar: {
+    extraContent: <GAScript />,
   },
   useNextSeoProps() {
     return {
