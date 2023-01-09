@@ -1,6 +1,6 @@
 {
   "insert": "Insert",
   "query": "Query",
-  "update": "update",
+  "update": "Update",
   "delete": "Delete"
 }
