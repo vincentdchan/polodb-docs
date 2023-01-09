@@ -1,0 +1,38 @@
+# Quick start
+
+## Open a database
+
+```rust
+use polodb_core::Database;
+
+let mut db = Database::open_file("/tmp/test-polo.db").unwrap();
+let test_collection = db.collection("test").unwrap();
+```
+
+## Collection
+
+A **Collection** is a dataset of a kind of data.
+You can use `create_collection` to create a data collection.
+To obtain an exist collection, use `collection`,
+
+## Transaction
+
+You an manually start a transaction by `start_transaction` method.
+If you don't start it manually, a transaction will be automatically started
+in your every operation.
+
+## Insert
+
+```rust
+use std::rc::Rc;
+use polodb_core::Database;
+use polodb_bson::doc;
+
+let mut db = Database::open_file("/tmp/test-collection").unwrap();
+let mut collection = db.collection("test").unwrap();
+collection.insert(doc! {
+    "_id": 0,
+    "name": "Vincent Chan",
+    "score": 99.99,
+}.as_mut());
+```
