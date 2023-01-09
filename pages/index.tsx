@@ -4,9 +4,7 @@ import Script from "next/script";
 import AppBar from "@mui/material/AppBar";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
@@ -16,6 +14,9 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Head from "next/head";
+import IntegrationInstructionsIcon from "@mui/icons-material/IntegrationInstructions";
+import SettingsSuggestIcon from "@mui/icons-material/SettingsSuggest";
+import DevicesIcon from "@mui/icons-material/Devices";
 
 function GAScript() {
   return (
@@ -46,8 +47,6 @@ function Copyright() {
     </Typography>
   );
 }
-
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const theme = createTheme();
 
@@ -102,7 +101,7 @@ export default function () {
                 <Button variant="contained">Documentations</Button>
               </Link>
               <Link href="https://github.com/vincentdchan/PoloDB">
-                <Button variant="outlined">Secondary action</Button>
+                <Button variant="outlined">Github</Button>
               </Link>
             </Stack>
           </Container>
@@ -110,40 +109,107 @@ export default function () {
         <Container sx={{ py: 8 }} maxWidth="md">
           {/* End hero unit */}
           <Grid container spacing={4}>
-            {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
-                <Card
+            <Grid item xs={12} sm={6} md={4}>
+              <Card
+                sx={{
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <Box
+                  display="flex"
+                  justifyContent="center"
                   sx={{
-                    height: "100%",
-                    display: "flex",
-                    flexDirection: "column",
+                    paddingTop: "12px",
+                    paddingBottom: "12px",
                   }}
                 >
-                  <CardMedia
-                    component="img"
+                  <IntegrationInstructionsIcon
                     sx={{
-                      // 16:9
-                      pt: "56.25%",
+                      width: "100px",
+                      height: "100px",
                     }}
-                    image="https://source.unsplash.com/random"
-                    alt="random"
                   />
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      Heading
-                    </Typography>
-                    <Typography>
-                      This is a media card. You can use this section to describe
-                      the content.
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small">View</Button>
-                    <Button size="small">Edit</Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
+                </Box>
+                <CardContent sx={{ flexGrow: 1 }}>
+                  <Typography gutterBottom variant="h5" component="h2">
+                    Embedded
+                  </Typography>
+                  <Typography>
+                    Only cost ~500kb memory to serve a database.
+                    <br />
+                    No standalone processes. No cross-process calls. No runtime
+                    dependency.
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={6} md={4}>
+              <Card
+                sx={{
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  sx={{
+                    paddingTop: "12px",
+                    paddingBottom: "12px",
+                  }}
+                >
+                  <SettingsSuggestIcon
+                    sx={{
+                      width: "100px",
+                      height: "100px",
+                    }}
+                  />
+                </Box>
+                <CardContent sx={{ flexGrow: 1 }}>
+                  <Typography gutterBottom variant="h5" component="h2">
+                    MongoDB-like API
+                  </Typography>
+                  <Typography>NoSQL. Easy to learn and use.</Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={6} md={4}>
+              <Card
+                sx={{
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  sx={{
+                    paddingTop: "12px",
+                    paddingBottom: "12px",
+                  }}
+                >
+                  <DevicesIcon
+                    sx={{
+                      width: "100px",
+                      height: "100px",
+                    }}
+                  />
+                </Box>
+                <CardContent sx={{ flexGrow: 1 }}>
+                  <Typography gutterBottom variant="h5" component="h2">
+                    Portable
+                  </Typography>
+                  <Typography>
+                    Cross-Platform. Various language bindings. Multiple
+                    backends.
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
           </Grid>
         </Container>
       </main>
