@@ -17,6 +17,7 @@ import Head from "next/head";
 import IntegrationInstructionsIcon from "@mui/icons-material/IntegrationInstructions";
 import SettingsSuggestIcon from "@mui/icons-material/SettingsSuggest";
 import DevicesIcon from "@mui/icons-material/Devices";
+import Image from "next/image";
 
 function GAScript() {
   return (
@@ -48,7 +49,16 @@ function Copyright() {
   );
 }
 
-const theme = createTheme();
+const theme = createTheme({
+  palette: {
+    primary: {
+      light: "#3f6396",
+      main: "#003968",
+      dark: "#00143d",
+      contrastText: "#fff",
+    },
+  },
+});
 
 export default function () {
   return (
@@ -74,15 +84,32 @@ export default function () {
           }}
         >
           <Container maxWidth="sm">
-            <Typography
-              component="h1"
-              variant="h2"
-              align="center"
-              color="text.primary"
-              gutterBottom
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              sx={{
+                marginBottom: "28px",
+              }}
             >
-              PoloDB
-            </Typography>
+              <Image
+                style={{
+                  marginRight: "28px",
+                }}
+                src="/static/logo.png"
+                width="80"
+                height="80"
+                alt=""
+              />
+              <Typography
+                component="h1"
+                variant="h2"
+                align="center"
+                color="text.primary"
+              >
+                PoloDB
+              </Typography>
+            </Box>
             <Typography
               variant="h5"
               align="center"
