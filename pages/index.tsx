@@ -72,6 +72,17 @@ export default function () {
           <Typography variant="h6" color="inherit" noWrap>
             PoloDB
           </Typography>
+          <Box marginLeft="auto" display="flex" alignItems="center">
+            <Link
+              href="https://github.com/vincentdchan/PoloDB"
+              style={{ marginRight: "16px" }}
+            >
+              <Image width="28" height="28" src="/static/github.png" alt="" />
+            </Link>
+            <Link href="https://discord.gg/judXX373">
+              <Image width="36" height="36" src="/static/discord.png" alt="" />
+            </Link>
+          </Box>
         </Toolbar>
       </AppBar>
       <main>
