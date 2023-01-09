@@ -15,6 +15,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Head from "next/head";
 
 function GAScript() {
   return (
@@ -53,6 +54,9 @@ const theme = createTheme();
 export default function () {
   return (
     <ThemeProvider theme={theme}>
+      <Head>
+        <link rel="shortcut icon" href="/static/favicon.ico" />
+      </Head>
       <CssBaseline />
       <AppBar position="relative">
         <Toolbar>
