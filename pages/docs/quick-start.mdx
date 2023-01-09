@@ -35,6 +35,23 @@ To obtain an exist collection, use the method `collection`.
 let test_collection = db.collection("test").unwrap();
 ```
 
+## Document
+
+A document is a row of JSON data in PoloDB.
+PoloDB uses an extended JSON which supports extended types such as Data and ObjectID.
+
+PoloDB uses the property `_id` as the primary key of the row of the data.
+If the document doesn't have an id, PoloDB will generate one automatically.
+Internally, PoloDB uses [msgpack](https://msgpack.org/) to encode the data, which is small an fast.
+
+An document can be constructed by the macro:
+
+```rust
+let keys = doc! {
+  "user_id": 1,
+};
+```
+
 ## Transaction
 
 You an manually start a transaction by `start_transaction` method.

@@ -1,10 +1,10 @@
 # Insert
 
-```rust
-use std::rc::Rc;
-use polodb_core::Database;
-use polodb_bson::doc;
+Invoke the `insert` method to insert an document.
+If the `_id` is not provided, PoloDB will mutate the document to
+add an id.
 
+```rust
 let mut db = Database::open_file("/tmp/test-collection").unwrap();
 let mut collection = db.collection("test").unwrap();
 collection.insert(doc! {

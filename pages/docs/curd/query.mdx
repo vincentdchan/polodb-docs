@@ -1,5 +1,32 @@
 # Query
 
+## Find
+
+The `find()` method will return all the data match the query.
+
+```rust
+ let result = collection.find(
+    &doc! {
+        "content": "3",
+    }
+).unwrap();
+```
+
+## Find one
+
+The `find_one()` method will the first row matches the query.
+This method will be more performant if you want to find the first one.
+
+```rust
+ let result = collection.find_one(
+    &doc! {
+        "content": "3",
+    }
+).unwrap();
+```
+
+## Condition
+
 | Name | Description                                                         |
 | ---- | ------------------------------------------------------------------- |
 | $eq  | Matches values that are equal to a specified value.                 |
