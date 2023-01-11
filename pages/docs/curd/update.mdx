@@ -1,5 +1,20 @@
 # Update
 
+The `update()` method is used to modify an existing document or documents in a collection.
+
+```rust
+let mut collection = db.collection::<Document>("config")?;
+collection.update_many(doc! {
+    "_id": "c2"
+}, doc! {
+    "$set": doc! {
+        "value": "c33",
+    },
+})?;
+```
+
+## Operations
+
 | Name    | Description                                                                             |
 | ------- | --------------------------------------------------------------------------------------- |
 | $inc    | Increments the value of the field by the specified amount.                              |
