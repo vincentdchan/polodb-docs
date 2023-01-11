@@ -60,11 +60,15 @@ const theme = createTheme({
   },
 });
 
+const description = "An embedded JSON-based database written in Rust.";
+
 export default function () {
   return (
     <ThemeProvider theme={theme}>
       <Head>
+        <title>PoloDB - An embedded JSON-based database</title>
         <link rel="shortcut icon" href="/static/favicon.ico" />
+        <meta name="description" content={description} />
       </Head>
       <CssBaseline />
       <AppBar position="relative">
@@ -127,7 +131,7 @@ export default function () {
               color="text.secondary"
               paragraph
             >
-              An embedded JSON-based database.
+              {description}
             </Typography>
             <Stack
               sx={{ pt: 4 }}
