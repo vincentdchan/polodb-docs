@@ -21,6 +21,24 @@ let result = collection.find_one(doc! {
 })?;
 ```
 
+## Specify `OR` Conditions
+
+Using the `$or` operator, you can specify a compound query that joins each clause with a logical `OR` conjunction
+so that the query selects the documents in the collection that match at least one condition.
+
+```rust
+let result = typed_collection.find_many(doc! {
+    "$or": [
+        {
+            "title": "The Grapes of Wrath",
+        },
+        {
+            "title": "To Kill a Mockingbird",
+        }
+    ]
+})?;
+```
+
 ## Condition
 
 | Name | Description                                                         |
