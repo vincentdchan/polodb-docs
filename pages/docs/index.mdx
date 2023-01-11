@@ -47,7 +47,7 @@ With the filesystem backend, PoloDB stores data in ONE file.
 All the data are saved persistently on the disk.
 
 It's designed to be flexible, universal, and easy to be searched.
-All the data are encoded in [msgpack](https://msgpack.org/) format and stored in the PoloDB's btree format.
+All the data are encoded in [bson](https://bsonspec.org/) format and stored in the PoloDB's btree format.
 
 PoloDB uses WAL(write-ahead logging) to implement transactional writing and protect your data from program crashes.
 

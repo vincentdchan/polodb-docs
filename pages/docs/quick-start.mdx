@@ -42,7 +42,7 @@ PoloDB uses an extended JSON which supports extended types such as Data and Obje
 
 PoloDB uses the property `_id` as the primary key of the row of the data.
 If the document doesn't have an id, PoloDB will generate one automatically.
-Internally, PoloDB uses [msgpack](https://msgpack.org/) to encode the data, which is small an fast.
+Internally, PoloDB uses [bson](https://bsonspec.org/) to encode the data, which is small an fast.
 
 An document can be constructed by the macro:
 
