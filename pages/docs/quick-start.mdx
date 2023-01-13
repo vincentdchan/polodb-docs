@@ -10,7 +10,7 @@ All the data are saved persistently on the disk.
 ```rust
 use polodb_core::Database;
 
-let mut db = Database::open_file("/tmp/test-polo.db").unwrap();
+let db = Database::open_file("/tmp/test-polo.db").unwrap();
 ```
 
 ### Memory backend
@@ -20,7 +20,7 @@ With the memory backend, all the data all stored in memory, making PoloDB a pure
 ```rust
 use polodb_core::Database;
 
-let mut db = Database::open_memory().unwrap();
+let db = Database::open_memory().unwrap();
 ```
 
 ## Collection
