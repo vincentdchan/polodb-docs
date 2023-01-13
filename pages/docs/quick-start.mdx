@@ -1,3 +1,5 @@
+import { Callout } from 'nextra-theme-docs'
+
 # Quick start
 
 ## Open a database
@@ -10,8 +12,12 @@ All the data are saved persistently on the disk.
 ```rust
 use polodb_core::Database;
 
-let db = Database::open_file("/tmp/test-polo.db").unwrap();
+let db = Database::open_file("test-polo.db").unwrap();
 ```
+
+<Callout type="warning" emoji="⚠️">
+  Do **NOT** open a database on a network volume.
+</Callout>
 
 ### Memory backend
 

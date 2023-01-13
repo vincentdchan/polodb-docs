@@ -216,9 +216,11 @@ export default function () {
                     MongoDB-like API
                   </Typography>
                   <Typography>
-                    NoSQL. Easy to learn and use.
+                    NoSQL.
                     <br />
-                    Basically the same as MongoDB
+                    Easy to learn and use.
+                    <br />
+                    API is aligned with MongoDB.
                   </Typography>
                 </CardContent>
               </Card>
