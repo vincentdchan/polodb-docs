@@ -60,13 +60,13 @@ const theme = createTheme({
   },
 });
 
-const description = "An embedded JSON-based database written in Rust.";
+const description = "An embedded JSON database written in Rust.";
 
 export default function () {
   return (
     <ThemeProvider theme={theme}>
       <Head>
-        <title>PoloDB - An embedded JSON-based database</title>
+        <title>PoloDB - An embedded JSON database</title>
         <link rel="shortcut icon" href="/static/favicon.ico" />
         <meta name="description" content={description} />
       </Head>
@@ -176,13 +176,14 @@ export default function () {
                 </Box>
                 <CardContent sx={{ flexGrow: 1 }}>
                   <Typography gutterBottom variant="h5" component="h2">
-                    Embedded
+                    Lightweight
                   </Typography>
                   <Typography>
                     Only cost ~500kb memory to serve a database.
                     <br />
-                    No standalone processes. No cross-process calls. No runtime
-                    dependency.
+                    No standalone processes.
+                    <br />
+                    No cross-process calls.
                   </Typography>
                 </CardContent>
               </Card>
@@ -214,7 +215,11 @@ export default function () {
                   <Typography gutterBottom variant="h5" component="h2">
                     MongoDB-like API
                   </Typography>
-                  <Typography>NoSQL. Easy to learn and use.</Typography>
+                  <Typography>
+                    NoSQL. Easy to learn and use.
+                    <br />
+                    Basically the same as MongoDB
+                  </Typography>
                 </CardContent>
               </Card>
             </Grid>
@@ -246,8 +251,11 @@ export default function () {
                     Portable
                   </Typography>
                   <Typography>
-                    Cross-Platform. Various language bindings. Multiple
-                    backends.
+                    Cross-Platform.
+                    <br />
+                    Multiple backends.
+                    <br />
+                    Various language bindings.
                   </Typography>
                 </CardContent>
               </Card>
