@@ -53,6 +53,8 @@ Internally, PoloDB uses [bson](https://bsonspec.org/) to encode the data, which 
 An document can be constructed by the macro:
 
 ```rust
+use polodb_core::bson::doc;
+
 let keys = doc! {
   "user_id": 1,
 };
@@ -63,3 +65,9 @@ let keys = doc! {
 You an manually start a transaction by `start_transaction` method.
 If you don't start it manually, a transaction will be automatically started
 in your every operation.
+
+```rust
+db.start_transaction(None)?;
+// CURD
+db.commit()?;
+```
