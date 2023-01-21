@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vincentdchan/PoloDB.git"
+    "url": "git+https://github.com/PoloDB/PoloDB.git"
   },
   "author": "Vincent Chen <okcdz@diverse.space>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/vincentdchan/PoloDB/issues"
+    "url": "https://github.com/PoloDB/PoloDB/issues"
   },
-  "homepage": "https://github.com/vincentdchan/PoloDB",
+  "homepage": "https://github.com/PoloDB/PoloDB",
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",

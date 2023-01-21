@@ -33,12 +33,12 @@ const config: DocsThemeConfig = {
     </>
   ),
   project: {
-    link: "https://github.com/vincentdchan/PoloDB",
+    link: "https://github.com/PoloDB/PoloDB",
   },
   chat: {
     link: "https://discord.gg/judXX373",
   },
-  docsRepositoryBase: "https://github.com/vincentdchan/polodb-docs",
+  docsRepositoryBase: "https://github.com/PoloDB/PoloDB-docs",
   footer: {
     text: `Copyright © ${new Date().getFullYear()} Vincent Chen`,
   },

@@ -78,7 +78,7 @@ export default function () {
           </Typography>
           <Box marginLeft="auto" display="flex" alignItems="center">
             <Link
-              href="https://github.com/vincentdchan/PoloDB"
+              href="https://github.com/PoloDB/PoloDB"
               style={{ marginRight: "16px" }}
             >
               <Image width="28" height="28" src="/static/github.png" alt="" />
@@ -142,7 +142,7 @@ export default function () {
               <Link href="/docs">
                 <Button variant="contained">Documentations</Button>
               </Link>
-              <Link href="https://github.com/vincentdchan/PoloDB">
+              <Link href="https://github.com/PoloDB/PoloDB">
                 <Button variant="outlined">Github</Button>
               </Link>
             </Stack>
