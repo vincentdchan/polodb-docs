@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import Link from "next/link";
 import Script from "next/script";
 import AppBar from "@mui/material/AppBar";
@@ -61,6 +61,69 @@ const theme = createTheme({
 });
 
 const description = "An embedded JSON database written in Rust.";
+
+interface PlatformCardProps {
+  title: string;
+}
+
+const PlatformCard = memo((props: PlatformCardProps) => {
+  const { title } = props;
+  return (
+    <Card sx={{ display: "flex" }}>
+      <Box sx={{ display: "flex", flexDirection: "column" }}>
+        <CardContent sx={{ flex: "1 0 auto" }}>
+          {title}
+          <Typography component="div" variant="h5"></Typography>
+        </CardContent>
+      </Box>
+    </Card>
+  );
+});
+
+function PlatformSection() {
+  return (
+    <Box>
+      <Typography variant="h4" mt={6} mb={4}>
+        Platforms
+      </Typography>
+      <Grid container spacing={4}>
+        <Grid item xs={12} sm={6} md={4}>
+          <PlatformCard title="MacOS" />
+        </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <PlatformCard title="Linux" />
+        </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <PlatformCard title="Windows" />
+        </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <PlatformCard title="iOS" />
+        </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <PlatformCard title="Android" />
+        </Grid>
+      </Grid>
+    </Box>
+  );
+}
+
+function LanguagesSection() {
+  return (
+    <Box>
+      <Typography variant="h4" mt={6} mb={4}>
+        Languages & Runtime
+      </Typography>
+      <Grid container spacing={4}>
+        <Grid item xs={12} sm={6} md={4}>
+          <PlatformCard title="Rust" />
+        </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <PlatformCard title="Node.js" />
+        </Grid>
+      </Grid>
+    </Box>
+  );
+}
 
 export default function () {
   return (
@@ -263,6 +326,8 @@ export default function () {
               </Card>
             </Grid>
           </Grid>
+          <PlatformSection />
+          <LanguagesSection />
         </Container>
       </main>
       {/* Footer */}
