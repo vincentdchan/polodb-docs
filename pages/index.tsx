@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import Link from "next/link";
 import Script from "next/script";
 import AppBar from "@mui/material/AppBar";
@@ -18,6 +18,8 @@ import IntegrationInstructionsIcon from "@mui/icons-material/IntegrationInstruct
 import SettingsSuggestIcon from "@mui/icons-material/SettingsSuggest";
 import DevicesIcon from "@mui/icons-material/Devices";
 import Image from "next/image";
+
+const IconPrefix = "/static/platforms";
 
 function GAScript() {
   return (
@@ -60,7 +62,200 @@ const theme = createTheme({
   },
 });
 
-const description = "An embedded JSON database written in Rust.";
+const description = "An embedded document database written in Rust.";
+
+interface PlatformCardProps {
+  title: string;
+  icon?: React.ReactNode;
+  disabled?: boolean;
+}
+
+const PlatformCard = memo((props: PlatformCardProps) => {
+  const { icon, title, disabled } = props;
+  return (
+    <Card
+      sx={{
+        display: "flex",
+      }}
+      style={{
+        cursor: disabled ? "not-allowed;" : "default",
+      }}
+    >
+      <Box
+        paddingLeft={1.5}
+        paddingRight={1.5}
+        display="flex"
+        flexDirection="row"
+        height={64}
+        alignItems="center"
+      >
+        {icon}
+        <span
+          style={{
+            paddingLeft: "8px",
+            color: disabled ? "gray" : "initial",
+          }}
+        >
+          {title}
+        </span>
+      </Box>
+    </Card>
+  );
+});
+
+function PlatformSection() {
+  return (
+    <Box>
+      <Typography variant="h4" mt={6} mb={4}>
+        Platforms
+      </Typography>
+      <Grid container spacing={4}>
+        <Grid item xs={12} sm={6} md={4}>
+          <PlatformCard
+            icon={
+              <Image
+                width={32}
+                height={32}
+                src={`${IconPrefix}/apple-logo-svgrepo-com.svg`}
+                alt=""
+              />
+            }
+            title="MacOS"
+          />
+        </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <PlatformCard
+            icon={
+              <Image
+                width={32}
+                height={32}
+                src={`${IconPrefix}/linux-svgrepo-com.svg`}
+                alt=""
+              />
+            }
+            title="Linux"
+          />
+        </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <PlatformCard
+            icon={
+              <Image
+                width={32}
+                height={32}
+                src={`${IconPrefix}/microsoft-svgrepo-com.svg`}
+                alt=""
+              />
+            }
+            title="Windows"
+          />
+        </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <PlatformCard
+            icon={
+              <Image
+                width={32}
+                height={32}
+                src={`${IconPrefix}/ios-svgrepo-com.svg`}
+                alt=""
+              />
+            }
+            title="iOS"
+            disabled
+          />
+        </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <PlatformCard
+            icon={
+              <Image
+                width={32}
+                height={32}
+                src={`${IconPrefix}/android-svgrepo-com.svg`}
+                alt=""
+              />
+            }
+            title="Android"
+            disabled
+          />
+        </Grid>
+      </Grid>
+    </Box>
+  );
+}
+
+function LanguagesSection() {
+  return (
+    <Box>
+      <Typography variant="h4" mt={6} mb={4}>
+        Languages & Runtime
+      </Typography>
+      <Grid container spacing={4}>
+        <Grid item xs={12} sm={6} md={4}>
+          <PlatformCard
+            title="Rust"
+            icon={
+              <Image
+                width={32}
+                height={32}
+                src={`${IconPrefix}/rust-svgrepo-com.svg`}
+                alt=""
+              />
+            }
+          />
+        </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <PlatformCard
+            title="Node.js"
+            icon={
+              <Image
+                width={32}
+                height={32}
+                src={`${IconPrefix}/node-js-svgrepo-com.svg`}
+                alt=""
+              />
+            }
+            disabled
+          />
+        </Grid>
+      </Grid>
+    </Box>
+  );
+}
+
+interface DetailCardProps {
+  icon: React.ReactNode;
+  title: string;
+  description: React.ReactNode;
+}
+
+const DetailCard = memo((props: DetailCardProps) => {
+  const { icon, title, description } = props;
+  return (
+    <Card
+      sx={{
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      <Box
+        display="flex"
+        justifyContent="center"
+        sx={{
+          paddingTop: "12px",
+          paddingBottom: "12px",
+        }}
+      >
+        {icon}
+      </Box>
+      <CardContent sx={{ flexGrow: 1 }}>
+        <Typography gutterBottom variant="h5" component="h2">
+          {title}
+        </Typography>
+        <Typography>{description}</Typography>
+      </CardContent>
+    </Card>
+  );
+});
 
 export default function () {
   return (
@@ -152,117 +347,74 @@ export default function () {
           {/* End hero unit */}
           <Grid container spacing={4}>
             <Grid item xs={12} sm={6} md={4}>
-              <Card
-                sx={{
-                  height: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                <Box
-                  display="flex"
-                  justifyContent="center"
-                  sx={{
-                    paddingTop: "12px",
-                    paddingBottom: "12px",
-                  }}
-                >
+              <DetailCard
+                icon={
                   <IntegrationInstructionsIcon
                     sx={{
                       width: "100px",
                       height: "100px",
                     }}
                   />
-                </Box>
-                <CardContent sx={{ flexGrow: 1 }}>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    Lightweight
-                  </Typography>
-                  <Typography>
+                }
+                title="Lightweight"
+                description={
+                  <>
                     Only cost ~500kb memory to serve a database.
                     <br />
                     No standalone processes.
                     <br />
                     No cross-process calls.
-                  </Typography>
-                </CardContent>
-              </Card>
+                  </>
+                }
+              />
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
-              <Card
-                sx={{
-                  height: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                <Box
-                  display="flex"
-                  justifyContent="center"
-                  sx={{
-                    paddingTop: "12px",
-                    paddingBottom: "12px",
-                  }}
-                >
+              <DetailCard
+                icon={
                   <SettingsSuggestIcon
                     sx={{
                       width: "100px",
                       height: "100px",
                     }}
                   />
-                </Box>
-                <CardContent sx={{ flexGrow: 1 }}>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    MongoDB-like API
-                  </Typography>
-                  <Typography>
+                }
+                title="MongoDB-like API"
+                description={
+                  <>
                     NoSQL.
                     <br />
                     Easy to learn and use.
                     <br />
                     API is aligned with MongoDB.
-                  </Typography>
-                </CardContent>
-              </Card>
+                  </>
+                }
+              />
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
-              <Card
-                sx={{
-                  height: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                <Box
-                  display="flex"
-                  justifyContent="center"
-                  sx={{
-                    paddingTop: "12px",
-                    paddingBottom: "12px",
-                  }}
-                >
+              <DetailCard
+                icon={
                   <DevicesIcon
                     sx={{
                       width: "100px",
                       height: "100px",
                     }}
                   />
-                </Box>
-                <CardContent sx={{ flexGrow: 1 }}>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    Portable
-                  </Typography>
-                  <Typography>
+                }
+                title="Portable"
+                description={
+                  <>
                     Cross-Platform.
                     <br />
                     Multiple backends.
                     <br />
                     Various language bindings.
-                  </Typography>
-                </CardContent>
-              </Card>
+                  </>
+                }
+              />
             </Grid>
           </Grid>
+          <PlatformSection />
+          <LanguagesSection />
         </Container>
       </main>
       {/* Footer */}
