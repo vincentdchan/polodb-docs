@@ -17,14 +17,9 @@ import Head from "next/head";
 import IntegrationInstructionsIcon from "@mui/icons-material/IntegrationInstructions";
 import SettingsSuggestIcon from "@mui/icons-material/SettingsSuggest";
 import DevicesIcon from "@mui/icons-material/Devices";
-import MacOSIcon from "./images/apple-logo-svgrepo-com.svg";
-import LinuxIcon from "./images/linux-svgrepo-com.svg";
-import WindowsIcon from "./images/microsoft-svgrepo-com.svg";
-import IOSIcon from "./images/ios-svgrepo-com.svg";
-import AndroidIcon from "./images/android-svgrepo-com.svg";
-import RustIcon from "./images/rust-svgrepo-com.svg";
-import NodeJSIcon from "./images/node-js-svgrepo-com.svg";
 import Image from "next/image";
+
+const IconPrefix = "/static/platforms";
 
 function GAScript() {
   return (
@@ -117,32 +112,67 @@ function PlatformSection() {
       <Grid container spacing={4}>
         <Grid item xs={12} sm={6} md={4}>
           <PlatformCard
-            icon={<img width={32} height={32} src={MacOSIcon} />}
+            icon={
+              <Image
+                width={32}
+                height={32}
+                src={`${IconPrefix}/apple-logo-svgrepo-com.svg`}
+                alt=""
+              />
+            }
             title="MacOS"
           />
         </Grid>
         <Grid item xs={12} sm={6} md={4}>
           <PlatformCard
-            icon={<img width={32} height={32} src={LinuxIcon} />}
+            icon={
+              <Image
+                width={32}
+                height={32}
+                src={`${IconPrefix}/linux-svgrepo-com.svg`}
+                alt=""
+              />
+            }
             title="Linux"
           />
         </Grid>
         <Grid item xs={12} sm={6} md={4}>
           <PlatformCard
-            icon={<img width={32} height={32} src={WindowsIcon} />}
+            icon={
+              <Image
+                width={32}
+                height={32}
+                src={`${IconPrefix}/microsoft-svgrepo-com.svg`}
+                alt=""
+              />
+            }
             title="Windows"
           />
         </Grid>
         <Grid item xs={12} sm={6} md={4}>
           <PlatformCard
-            icon={<img width={32} height={32} src={IOSIcon} />}
+            icon={
+              <Image
+                width={32}
+                height={32}
+                src={`${IconPrefix}/ios-svgrepo-com.svg`}
+                alt=""
+              />
+            }
             title="iOS"
             disabled
           />
         </Grid>
         <Grid item xs={12} sm={6} md={4}>
           <PlatformCard
-            icon={<img width={32} height={32} src={AndroidIcon} />}
+            icon={
+              <Image
+                width={32}
+                height={32}
+                src={`${IconPrefix}/android-svgrepo-com.svg`}
+                alt=""
+              />
+            }
             title="Android"
             disabled
           />
@@ -162,13 +192,27 @@ function LanguagesSection() {
         <Grid item xs={12} sm={6} md={4}>
           <PlatformCard
             title="Rust"
-            icon={<img width={32} height={32} src={RustIcon} alt="" />}
+            icon={
+              <Image
+                width={32}
+                height={32}
+                src={`${IconPrefix}/rust-svgrepo-com.svg`}
+                alt=""
+              />
+            }
           />
         </Grid>
         <Grid item xs={12} sm={6} md={4}>
           <PlatformCard
             title="Node.js"
-            icon={<img width={32} height={32} src={NodeJSIcon} alt="" />}
+            icon={
+              <Image
+                width={32}
+                height={32}
+                src={`${IconPrefix}/node-js-svgrepo-com.svg`}
+                alt=""
+              />
+            }
             disabled
           />
         </Grid>
