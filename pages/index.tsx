@@ -17,6 +17,13 @@ import Head from "next/head";
 import IntegrationInstructionsIcon from "@mui/icons-material/IntegrationInstructions";
 import SettingsSuggestIcon from "@mui/icons-material/SettingsSuggest";
 import DevicesIcon from "@mui/icons-material/Devices";
+import MacOSIcon from "./images/apple-logo-svgrepo-com.svg";
+import LinuxIcon from "./images/linux-svgrepo-com.svg";
+import WindowsIcon from "./images/microsoft-svgrepo-com.svg";
+import IOSIcon from "./images/ios-svgrepo-com.svg";
+import AndroidIcon from "./images/android-svgrepo-com.svg";
+import RustIcon from "./images/rust-svgrepo-com.svg";
+import NodeJSIcon from "./images/node-js-svgrepo-com.svg";
 import Image from "next/image";
 
 function GAScript() {
@@ -64,17 +71,38 @@ const description = "An embedded document database written in Rust.";
 
 interface PlatformCardProps {
   title: string;
+  icon?: React.ReactNode;
+  disabled?: boolean;
 }
 
 const PlatformCard = memo((props: PlatformCardProps) => {
-  const { title } = props;
+  const { icon, title, disabled } = props;
   return (
-    <Card sx={{ display: "flex" }}>
-      <Box sx={{ display: "flex", flexDirection: "column" }}>
-        <CardContent sx={{ flex: "1 0 auto" }}>
+    <Card
+      sx={{
+        display: "flex",
+      }}
+      style={{
+        cursor: disabled ? "not-allowed;" : "default",
+      }}
+    >
+      <Box
+        paddingLeft={1.5}
+        paddingRight={1.5}
+        display="flex"
+        flexDirection="row"
+        height={64}
+        alignItems="center"
+      >
+        {icon}
+        <span
+          style={{
+            paddingLeft: "8px",
+            color: disabled ? "gray" : "initial",
+          }}
+        >
           {title}
-          <Typography component="div" variant="h5"></Typography>
-        </CardContent>
+        </span>
       </Box>
     </Card>
   );
@@ -88,19 +116,36 @@ function PlatformSection() {
       </Typography>
       <Grid container spacing={4}>
         <Grid item xs={12} sm={6} md={4}>
-          <PlatformCard title="MacOS" />
+          <PlatformCard
+            icon={<img width={32} height={32} src={MacOSIcon} />}
+            title="MacOS"
+          />
         </Grid>
         <Grid item xs={12} sm={6} md={4}>
-          <PlatformCard title="Linux" />
+          <PlatformCard
+            icon={<img width={32} height={32} src={LinuxIcon} />}
+            title="Linux"
+          />
         </Grid>
         <Grid item xs={12} sm={6} md={4}>
-          <PlatformCard title="Windows" />
+          <PlatformCard
+            icon={<img width={32} height={32} src={WindowsIcon} />}
+            title="Windows"
+          />
         </Grid>
         <Grid item xs={12} sm={6} md={4}>
-          <PlatformCard title="iOS" />
+          <PlatformCard
+            icon={<img width={32} height={32} src={IOSIcon} />}
+            title="iOS"
+            disabled
+          />
         </Grid>
         <Grid item xs={12} sm={6} md={4}>
-          <PlatformCard title="Android" />
+          <PlatformCard
+            icon={<img width={32} height={32} src={AndroidIcon} />}
+            title="Android"
+            disabled
+          />
         </Grid>
       </Grid>
     </Box>
@@ -115,10 +160,17 @@ function LanguagesSection() {
       </Typography>
       <Grid container spacing={4}>
         <Grid item xs={12} sm={6} md={4}>
-          <PlatformCard title="Rust" />
+          <PlatformCard
+            title="Rust"
+            icon={<img width={32} height={32} src={RustIcon} alt="" />}
+          />
         </Grid>
         <Grid item xs={12} sm={6} md={4}>
-          <PlatformCard title="Node.js" />
+          <PlatformCard
+            title="Node.js"
+            icon={<img width={32} height={32} src={NodeJSIcon} alt="" />}
+            disabled
+          />
         </Grid>
       </Grid>
     </Box>

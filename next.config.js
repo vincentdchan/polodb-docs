@@ -3,4 +3,6 @@ const withNextra = require('nextra')({
   themeConfig: './theme.config.tsx',
 })
 
-module.exports = withNextra()
+const withImages = require('next-images');
+
+module.exports = withImages(withNextra());
