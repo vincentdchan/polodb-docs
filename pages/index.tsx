@@ -60,7 +60,7 @@ const theme = createTheme({
   },
 });
 
-const description = "An embedded JSON database written in Rust.";
+const description = "An embedded document database written in Rust.";
 
 interface PlatformCardProps {
   title: string;
@@ -124,6 +124,42 @@ function LanguagesSection() {
     </Box>
   );
 }
+
+interface DetailCardProps {
+  icon: React.ReactNode;
+  title: string;
+  description: React.ReactNode;
+}
+
+const DetailCard = memo((props: DetailCardProps) => {
+  const { icon, title, description } = props;
+  return (
+    <Card
+      sx={{
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      <Box
+        display="flex"
+        justifyContent="center"
+        sx={{
+          paddingTop: "12px",
+          paddingBottom: "12px",
+        }}
+      >
+        {icon}
+      </Box>
+      <CardContent sx={{ flexGrow: 1 }}>
+        <Typography gutterBottom variant="h5" component="h2">
+          {title}
+        </Typography>
+        <Typography>{description}</Typography>
+      </CardContent>
+    </Card>
+  );
+});
 
 export default function () {
   return (
@@ -215,115 +251,70 @@ export default function () {
           {/* End hero unit */}
           <Grid container spacing={4}>
             <Grid item xs={12} sm={6} md={4}>
-              <Card
-                sx={{
-                  height: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                <Box
-                  display="flex"
-                  justifyContent="center"
-                  sx={{
-                    paddingTop: "12px",
-                    paddingBottom: "12px",
-                  }}
-                >
+              <DetailCard
+                icon={
                   <IntegrationInstructionsIcon
                     sx={{
                       width: "100px",
                       height: "100px",
                     }}
                   />
-                </Box>
-                <CardContent sx={{ flexGrow: 1 }}>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    Lightweight
-                  </Typography>
-                  <Typography>
+                }
+                title="Lightweight"
+                description={
+                  <>
                     Only cost ~500kb memory to serve a database.
                     <br />
                     No standalone processes.
                     <br />
                     No cross-process calls.
-                  </Typography>
-                </CardContent>
-              </Card>
+                  </>
+                }
+              />
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
-              <Card
-                sx={{
-                  height: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                <Box
-                  display="flex"
-                  justifyContent="center"
-                  sx={{
-                    paddingTop: "12px",
-                    paddingBottom: "12px",
-                  }}
-                >
+              <DetailCard
+                icon={
                   <SettingsSuggestIcon
                     sx={{
                       width: "100px",
                       height: "100px",
                     }}
                   />
-                </Box>
-                <CardContent sx={{ flexGrow: 1 }}>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    MongoDB-like API
-                  </Typography>
-                  <Typography>
+                }
+                title="MongoDB-like API"
+                description={
+                  <>
                     NoSQL.
                     <br />
                     Easy to learn and use.
                     <br />
                     API is aligned with MongoDB.
-                  </Typography>
-                </CardContent>
-              </Card>
+                  </>
+                }
+              />
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
-              <Card
-                sx={{
-                  height: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                <Box
-                  display="flex"
-                  justifyContent="center"
-                  sx={{
-                    paddingTop: "12px",
-                    paddingBottom: "12px",
-                  }}
-                >
+              <DetailCard
+                icon={
                   <DevicesIcon
                     sx={{
                       width: "100px",
                       height: "100px",
                     }}
                   />
-                </Box>
-                <CardContent sx={{ flexGrow: 1 }}>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    Portable
-                  </Typography>
-                  <Typography>
+                }
+                title="Portable"
+                description={
+                  <>
                     Cross-Platform.
                     <br />
                     Multiple backends.
                     <br />
                     Various language bindings.
-                  </Typography>
-                </CardContent>
-              </Card>
+                  </>
+                }
+              />
             </Grid>
           </Grid>
           <PlatformSection />
