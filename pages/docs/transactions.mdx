@@ -1,0 +1,40 @@
+
+# Transactions
+
+A transaction symbolizes a unit of work.
+In PoloDB, an operation on a single document is atomic.
+
+For situations that require atomicity of reads and writes to multiple documents (in a single or multiple collections),
+PoloDB supports multi-document transactions. 
+
+## Transactions API
+
+
+This example highlights the key components of the transactions API.
+In particular, it uses the API with `_session` suffix.
+The callback API:
+
+- starts a transaction
+- executes the specified operations
+- commits the result (or aborts on error)
+
+```rust
+use polodb_core::Database;
+use polodb_core::bson::{Document, doc};
+let db = Database::open_file(db_path).unwrap();
+
+let mut session = db.start_session().unwrap();
+session.start_transaction(None).unwrap();
+
+let collection = db.collection::<Document>("books");
+
+let docs = vec![
+    doc! { "title": "1984", "author": "George Orwell" },
+    doc! { "title": "Animal Farm", "author": "George Orwell" },
+    doc! { "title": "The Great Gatsby", "author": "F. Scott Fitzgerald" },
+];
+collection.insert_many_with_session(docs, &mut session).unwrap();
+
+session.commit_transaction().unwrap();
+```
+
