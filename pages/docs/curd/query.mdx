@@ -2,23 +2,30 @@
 
 ## Find
 
-The `find()` method will return all the data match the query.
+The `find()` method is used to query a collection for documents that match a specific query criteria.
+When called with no arguments, the find() method returns all documents in the collection.
 
 ```rust
-let result = collection.find_many(doc! {
-    "content": "3",
-})?;
-```
+#[derive(Debug, Serialize, Deserialize)]
+struct Book {
+   title: String,
+   author: String,
+}
 
-## Find one
+let db = Database::open_memory().unwrap();
+let collection = db.collection::<Book>("books");
 
-The `find_one()` method will the first row matches the query.
-This method will be more performant if you want to find the first one.
+let docs = vec![
+    Book { title: "1984".to_string(), author: "George Orwell".to_string() },
+    Book { title: "Animal Farm".to_string(), author: "George Orwell".to_string() },
+    Book { title: "The Great Gatsby".to_string(), author: "F. Scott Fitzgerald".to_string() },
+];
+collection.insert_many(docs).unwrap();
 
-```rust
-let result = collection.find_one(doc! {
-    "content": "3",
-})?;
+let books = collection.find(None).unwrap();
+for book in books {
+    println!("name: {:?}", book);
+}
 ```
 
 ## Specify `OR` Conditions
@@ -27,16 +34,18 @@ Using the `$or` operator, you can specify a compound query that joins each claus
 so that the query selects the documents in the collection that match at least one condition.
 
 ```rust
-let result = typed_collection.find_many(doc! {
-    "$or": [
-        {
-            "title": "The Grapes of Wrath",
-        },
-        {
-            "title": "To Kill a Mockingbird",
-        }
-    ]
-})?;
+let result = typed_collection
+    .find(doc! {
+        "$or": [
+            {
+                "title": "The Grapes of Wrath",
+            },
+            {
+                "title": "To Kill a Mockingbird",
+            }
+        ]
+    })?
+    .collect::<DbResult<Vec<Document>>>()?;
 ```
 
 ## Condition
