@@ -29,6 +29,20 @@ for book in books {
 }
 ```
 
+**Example:**
+
+If we want to find a book written by George Orwell, we can find using the author's name like this:
+
+```rust
+let books = collection.find(doc! {
+    "author": "George Orwell",
+}).unwrap();
+
+for book in books {
+    println!("name: {:?}", book);
+}
+```
+
 ## Specify `OR` Conditions
 
 Using the `$or` operator, you can specify a compound query that joins each clause with a logical `OR` conjunction
