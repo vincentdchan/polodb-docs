@@ -46,7 +46,7 @@ let result = typed_collection
             }
         ]
     })?
-    .collect::<DbResult<Vec<Document>>>()?;
+    .collect::<Result<Vec<Document>>>()?;
 ```
 
 ## Condition
