@@ -2,8 +2,9 @@
 
 ## Find
 
-The `find()` method is used to query a collection for documents that match a specific query criteria.
-When called with no arguments, the find() method returns all documents in the collection.
+The `find()` method is used to query a collection for documents that match specific query criteria.
+When called with no arguments, the `find()` method returns a cursor pointing to the results.
+You can manipulate the cursor to retrieve the data from the database.
 
 ```rust
 #[derive(Debug, Serialize, Deserialize)]

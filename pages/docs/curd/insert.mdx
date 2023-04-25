@@ -1,8 +1,10 @@
 # Insert
 
-Invoke the `insert` method to insert an document.
-If the `_id` is not provided, PoloDB will mutate the document to
-add an id.
+To insert a document, invoke the `insert` method.
+After the document is inserted, an `InsertResult` struct will be returned.
+If you don't provide a primary key, the database will create one for you and obtain it in the result.
+
+You can also use the `insert_many` method to insert multiple documents at once.
 
 ## Insert one item
 
