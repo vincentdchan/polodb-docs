@@ -1,3 +1,60 @@
 # Indexes
 
-Work in progress
+Indexes supports the efficent execution of queries in PoloDB.
+Without indexes, PoloDB must begin with the first record and then read through the entire table to find the relevant records.
+If an appropriate index exists for a query, PoloDB can use the index to limit the number of records that must be read.
+
+## Create an index
+
+To create an index with Rust, use `create_index` method:
+
+```rust
+let teachers = db.collection("teacher");
+
+teachers.create_index(IndexModel {
+    keys: doc! {
+        "age": 1,
+    },
+    options: None,
+})?;
+```
+
+This command is indicating that PoloDB will create a single field index of the `age` field in the `teacher` collection.
+The value of the `age` field represents the keys' direction in the index.
+It can be either 1 or -1, which means ascending or descending.
+
+> Currently, only ascending indexes are supported(which is 1).
+
+## Index name
+
+PoloDB will generate a name for the index if you don't specify one.
+For example, the index name of the above example will be `age_1`.
+
+## Index Properties
+
+### Unique Indexes
+
+The unique property of an index causes PoloDB to reject duplicate values for the indexed field.
+You can use the `unique` option to create a unique index.
+
+```rust
+let teachers = db.collection("teacher");
+
+teachers.create_index(IndexModel {
+    keys: doc! {
+        "name": 1,
+    },
+    options: Some(IndexOptions{
+        unique: Some(true),
+        ..Default::default()
+    }),
+})?;
+```
+
+## Drop an index
+
+You can use the `drop_index` method to drop an index:
+
+```rust
+teachers.drop_index("age_1")?;
+```
