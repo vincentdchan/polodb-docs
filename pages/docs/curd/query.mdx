@@ -13,7 +13,7 @@ struct Book {
    author: String,
 }
 
-let db = Database::open_memory().unwrap();
+let db = Database::open_memory()?;
 let collection = db.collection::<Book>("books");
 
 let docs = vec![
@@ -21,9 +21,9 @@ let docs = vec![
     Book { title: "Animal Farm".to_string(), author: "George Orwell".to_string() },
     Book { title: "The Great Gatsby".to_string(), author: "F. Scott Fitzgerald".to_string() },
 ];
-collection.insert_many(docs).unwrap();
+collection.insert_many(docs)?;
 
-let books = collection.find(None).unwrap();
+let books = collection.find(None)?;
 for book in books {
     println!("name: {:?}", book);
 }
@@ -36,11 +36,23 @@ If we want to find a book written by George Orwell, we can find using the author
 ```rust
 let books = collection.find(doc! {
     "author": "George Orwell",
-}).unwrap();
+})?;
 
 for book in books {
     println!("name: {:?}", book);
 }
+```
+
+## Specify `AND` Conditions
+
+A compond query can specify conditions for more than one field in the collection's documents.
+Implicit `AND` conjunction of the query clauses.
+
+```rust
+collection.find(doc! {
+    "author": "George Orwell",
+    "title": "1984",
+})?;
 ```
 
 ## Specify `OR` Conditions
@@ -63,7 +75,7 @@ let result = typed_collection
     .collect::<Result<Vec<Document>>>()?;
 ```
 
-## Condition
+## Advanced condition
 
 | Name | Description                                                         |
 | ---- | ------------------------------------------------------------------- |
@@ -75,3 +87,13 @@ let result = typed_collection
 | $lte | Matches values that are less than or equal to a specified value.    |
 | $ne  | Matches all values that are not equal to a specified value.         |
 | $nin | Matches none of the values specified in an array.                   |
+
+### Specify `GT` Conditions
+
+```rust
+collection.find(doc! {
+    "age": { "$gt": 18 },
+})?;
+```
+
+The above query is specifying that the age field must be greater than 18.
