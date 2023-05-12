@@ -20,12 +20,12 @@ struct Book {
     author: String,
 }
 
-let db = Database::open_file(db_path).unwrap();
+let db = Database::open_file(db_path)?;
 let collection = db.collection("books");
 collection.insert_one(Book {
     title: "The Three-Body Problem".to_string(),
     author: "Liu Cixin".to_string(),
-}).unwrap();
+})?;
 ```
 
 ## Insert many items
@@ -44,7 +44,7 @@ let docs = vec![
 ];
 
 // Insert some documents into the "mydb.books" collection.
-typed_collection.insert_many(docs, None).unwrap();
+typed_collection.insert_many(docs, None)?;
 ```
 
 A Collection can be parameterized with any type that implements the Serialize and Deserialize traits from the serde crate, not just Document:
@@ -67,5 +67,5 @@ let books = vec![
 ];
 
 // Insert the books into "mydb.books" collection, no manual conversion to BSON necessary.
-typed_collection.insert_many(books).unwrap();
+typed_collection.insert_many(books)?;
 ```
