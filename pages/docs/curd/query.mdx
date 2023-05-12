@@ -43,6 +43,16 @@ for book in books {
 }
 ```
 
+If you only want to find the first result match the filter, use `find_one`:
+
+```rust
+let book = collection.find_one(doc! {
+    "author": "George Orwell",
+})?;
+
+println!("name: {:?}", book);
+```
+
 ## Specify `AND` Conditions
 
 A compond query can specify conditions for more than one field in the collection's documents.
