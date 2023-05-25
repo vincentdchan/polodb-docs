@@ -85,7 +85,7 @@ let result = typed_collection
     .collect::<Result<Vec<Document>>>()?;
 ```
 
-## Advanced condition
+## Advanced conditions
 
 | Name | Description                                                         |
 | ---- | ------------------------------------------------------------------- |
@@ -98,7 +98,25 @@ let result = typed_collection
 | $ne  | Matches all values that are not equal to a specified value.         |
 | $nin | Matches none of the values specified in an array.                   |
 
-### Specify `GT` Conditions
+### Specify `EQ` and `NE` Condition
+
+```rust
+collection.find(doc! {
+    "age": { "$eq": 18 },
+})?;
+```
+
+The above query is specifying the `age` field must be equal to 18.
+
+```rust
+collection.find(doc! {
+    "age": { "$ne": 18 },
+})?;
+```
+
+While this one should is specifying the `age` field should not be equal to 18.
+
+### Specify `GT` and `GTE` Conditions
 
 ```rust
 collection.find(doc! {
@@ -106,4 +124,48 @@ collection.find(doc! {
 })?;
 ```
 
-The above query is specifying that the age field must be greater than 18.
+The above query is specifying that the `age` field must be greater than 18.
+
+```rust
+collection.find(doc! {
+    "age": { "$gte": 18 },
+})?;
+```
+
+While this one is specifying the `age` field must be greater or equal to `18`
+
+### Specify `IN` and `NIN` Conditions
+
+```rust
+collection.find(doc! {
+    "age": { "$in": [18, 19, 20] },
+})?;
+```
+
+The above query is specifying the `age` field must in the provided `int slice`.
+
+```rust
+collection.find(doc! {
+    "age": { "$nin": [18, 19, 20] },
+})?;
+```
+
+While this one is specifying the `age` field must not be equal to one of the values inside the `int slice`.
+
+### Specify `LT` and `LTE` Conditions
+
+```rust
+collection.find(doc! {
+    "age": { "$lt": 18 },
+})?;
+```
+
+The above query is specifying that the `age` field must be less than 18.
+
+```rust
+collection.find(doc! {
+    "age": { "$lte": 18 },
+})?;
+```
+
+While this one is specifying the `age` field must be less or equal to `18`
