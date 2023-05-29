@@ -36,7 +36,7 @@ const config: DocsThemeConfig = {
     link: "https://github.com/PoloDB/PoloDB",
   },
   chat: {
-    link: "https://discord.gg/judXX373",
+    link: "https://discord.gg/NmGQyVx6hH",
   },
   docsRepositoryBase: "https://github.com/PoloDB/PoloDB-docs",
   footer: {

@@ -278,7 +278,7 @@ export default function () {
             >
               <Image width="28" height="28" src="/static/github.png" alt="" />
             </Link>
-            <Link href="https://discord.gg/judXX373">
+            <Link href="https://discord.gg/NmGQyVx6hH">
               <Image width="36" height="36" src="/static/discord.png" alt="" />
             </Link>
           </Box>
