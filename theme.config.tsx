@@ -2,6 +2,7 @@ import React from "react";
 import { DocsThemeConfig } from "nextra-theme-docs";
 import Head from "next/head";
 import Script from "next/script";
+import { Analytics } from '@vercel/analytics/react';
 
 function GAScript() {
   return (
@@ -19,6 +20,7 @@ function GAScript() {
   gtag('config', 'G-6BLWHTFTEP');
   `}
       </Script>
+      <Analytics />
     </>
   );
 }
