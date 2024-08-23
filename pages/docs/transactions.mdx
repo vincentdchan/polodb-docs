@@ -23,18 +23,18 @@ use polodb_core::Database;
 use polodb_core::bson::{Document, doc};
 let db = Database::open_file(db_path).unwrap();
 
-let mut session = db.start_session().unwrap();
-session.start_transaction(None).unwrap();
+let txn = db.start_transaction().unwrap();
 
-let collection = db.collection::<Document>("books");
+// the collection is associated with the transaction
+let collection = txn.collection::<Document>("books");
 
 let docs = vec![
     doc! { "title": "1984", "author": "George Orwell" },
     doc! { "title": "Animal Farm", "author": "George Orwell" },
     doc! { "title": "The Great Gatsby", "author": "F. Scott Fitzgerald" },
 ];
-collection.insert_many_with_session(docs, &mut session).unwrap();
+collection.insert_many(docs).unwrap();
 
-session.commit_transaction().unwrap();
+txn.commit().unwrap();
 ```
 

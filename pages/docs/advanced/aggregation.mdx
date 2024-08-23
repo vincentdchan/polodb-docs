@@ -1,3 +1,156 @@
 # Aggregation
 
-Work in progress
+PoloDB uses `aggregate` to process data records and return computed results.
+You can pass an array of aggregation stages to the `aggregate` method.
+  
+```rust
+ let result = fruits
+    .aggregate(vec![
+        doc! {
+            "$match": {
+                "color": "yellow",
+            },
+        },
+        doc! {
+            "$count": "count",
+        }
+    ])
+    .run()?
+    .collect::<Result<Vec<Document>>>()?
+```
+
+In the example above, the aggregation pipeline consists of two stages:
+- `$match` stage filters the documents by the color field.
+- `$count` stage counts the number of documents that pass through the pipeline.
+
+Heres a list of aggregation stages that PoloDB supports:
+
+## $match
+
+Filters the documents to pass only the documents that match the specified condition.
+
+```rust
+let result = fruits
+    .aggregate(vec![
+        doc! {
+            "$match": {
+                "color": "yellow",
+            },
+        },
+    ])
+    .run()?
+    .collect::<Result<Vec<Document>>>()?
+```
+
+## $count
+
+Counts the number of documents that pass through the pipeline.
+
+```rust
+let result = fruits
+    .aggregate(vec![
+        doc! {
+            "$count": "count",
+        }
+    ])
+    .run()?
+    .collect::<Result<Vec<Document>>>()?
+```
+
+## $group
+
+Groups documents by some specified expression and outputs to the next stage a document for each distinct grouping.
+
+```rust
+let result = fruits
+    .aggregate(vec![
+        doc! {
+            "$group": {
+                "_id": "$color",
+                "count": { "$sum": 1 },
+            },
+        },
+    ])
+    .run()?
+    .collect::<Result<Vec<Document>>>()?
+```
+
+## $sort
+
+Sorts all input documents and returns them to the pipeline in sorted order.
+
+```rust
+let result = fruits
+    .aggregate(vec![
+        doc! {
+            "$sort": {
+                "color": 1,
+            },
+        },
+    ])
+    .run()?
+    .collect::<Result<Vec<Document>>>()?
+```
+
+## $limit
+
+Limits the number of documents passed to the next stage in the pipeline.
+
+```rust
+let result = fruits
+    .aggregate(vec![
+        doc! {
+            "$limit": 2,
+        },
+    ])
+    .run()?
+    .collect::<Result<Vec<Document>>>()?
+```
+
+## $skip
+
+Skips a specified number of documents.
+
+```rust
+let result = fruits
+    .aggregate(vec![
+        doc! {
+            "$skip": 1,
+        },
+    ])
+    .run()?
+    .collect::<Result<Vec<Document>>>()?
+```
+
+## $addFields
+
+Adds new fields to documents.
+
+```rust
+let result = fruits
+    .aggregate(vec![
+        doc! {
+            "$addFields": {
+                "newField": "new value",
+            },
+        },
+    ])
+    .run()?
+    .collect::<Result<Vec<Document>>>()?
+```
+
+## $unset
+
+Removes fields from documents.
+
+```rust
+let result = fruits
+    .aggregate(vec![
+        doc! {
+            "$unset": "color",
+        },
+    ])
+    .run()?
+    .collect::<Result<Vec<Document>>>()?
+```
+

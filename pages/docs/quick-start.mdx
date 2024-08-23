@@ -4,7 +4,6 @@ import { Callout } from 'nextra-theme-docs'
 
 ## Open a database
 
-### Filesystem backend
 
 With the filesystem backend, PoloDB stores data in ONE file.
 All the data are saved persistently on the disk.
@@ -12,22 +11,12 @@ All the data are saved persistently on the disk.
 ```rust
 use polodb_core::Database;
 
-let db = Database::open_file("test-polo.db").unwrap();
+let db = Database::open_path("test-polo.db").unwrap();
 ```
 
 <Callout type="warning" emoji="⚠️">
   Do **NOT** open a database on a network volume.
 </Callout>
-
-### Memory backend
-
-With the memory backend, all the data all stored in memory, making PoloDB a pure memory database.
-
-```rust
-use polodb_core::Database;
-
-let db = Database::open_memory().unwrap();
-```
 
 ## Collection
 
@@ -39,6 +28,9 @@ To obtain an exist collection, use the method `collection`.
 
 ```rust
 let test_collection = db.collection("test");
+test_collection.insert_one(
+    doc! { "title": "1984", "author": "George Orwell" },
+)?;
 ```
 
 ## Document

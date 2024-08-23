@@ -22,27 +22,6 @@ and retains the embedded and lightweight features of SQLite.
   - Memory
   - IndexedDB(WIP)
 
-# Backends
-
-PoloDB designs an abstract layer for the computation and the store backend.
-It supports different backends naturally.
-
-![](./backend.png)
-
-## Filesystem Backend
-
-With the filesystem backend, PoloDB stores data in a single file.
-All the data are saved persistently on the disk.
-
-It's designed to be flexible, universal, and easy to be searched.
-All the data are encoded in [bson](http://bsonspec.org/) format and stored in the PoloDB's lsm-tree format.
-
-PoloDB uses WAL(write-ahead logging) to implement transactional writing and protect your data from program crashes.
-
-## Memory Backend
-
-With the memory backend, all the data all stored in memory, making PoloDB a pure memory database.
-
 # Platform
 
 Theoretically, PoloDB supports all platforms that the Rust compiler
