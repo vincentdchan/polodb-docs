@@ -4,42 +4,61 @@ PoloDB uses `aggregate` to process data records and return computed results.
 You can pass an array of aggregation stages to the `aggregate` method.
   
 ```rust
- let result = fruits
-    .aggregate(vec![
-        doc! {
-            "$match": {
-                "color": "yellow",
+use polodb_core::{
+    bson::{doc, Document},
+    CollectionT, Database, Result,
+};
+
+fn count_yellow_fruits(db: &Database) -> Result<Vec<Document>> {
+    let fruits = db.collection::<Document>("fruits");
+
+    fruits
+        .aggregate(vec![
+            doc! {
+                "$match": {
+                    "color": "yellow",
+                },
             },
-        },
-        doc! {
-            "$count": "count",
-        }
-    ])
-    .run()?
-    .collect::<Result<Vec<Document>>>()?
+            doc! {
+                "$count": "count",
+            },
+        ])
+        .run()?
+        .collect()
+}
 ```
 
 In the example above, the aggregation pipeline consists of two stages:
+
 - `$match` stage filters the documents by the color field.
 - `$count` stage counts the number of documents that pass through the pipeline.
 
-Heres a list of aggregation stages that PoloDB supports:
+Here's a list of aggregation stages that PoloDB supports:
 
 ## $match
 
 Filters the documents to pass only the documents that match the specified condition.
 
 ```rust
-let result = fruits
-    .aggregate(vec![
-        doc! {
-            "$match": {
-                "color": "yellow",
+use polodb_core::{
+    bson::{doc, Document},
+    CollectionT, Database, Result,
+};
+
+fn find_yellow_fruits(db: &Database) -> Result<Vec<Document>> {
+    let fruits = db.collection::<Document>("fruits");
+
+    fruits
+        .aggregate(vec![
+            doc! {
+                "$match": {
+                    "color": "yellow",
+                },
             },
-        },
-    ])
-    .run()?
-    .collect::<Result<Vec<Document>>>()?
+        ])
+        .run()?
+        .collect()
+}
 ```
 
 ## $count
@@ -47,14 +66,23 @@ let result = fruits
 Counts the number of documents that pass through the pipeline.
 
 ```rust
-let result = fruits
-    .aggregate(vec![
-        doc! {
-            "$count": "count",
-        }
-    ])
-    .run()?
-    .collect::<Result<Vec<Document>>>()?
+use polodb_core::{
+    bson::{doc, Document},
+    CollectionT, Database, Result,
+};
+
+fn count_fruits(db: &Database) -> Result<Vec<Document>> {
+    let fruits = db.collection::<Document>("fruits");
+
+    fruits
+        .aggregate(vec![
+            doc! {
+                "$count": "count",
+            },
+        ])
+        .run()?
+        .collect()
+}
 ```
 
 ## $group
@@ -62,17 +90,26 @@ let result = fruits
 Groups documents by some specified expression and outputs to the next stage a document for each distinct grouping.
 
 ```rust
-let result = fruits
-    .aggregate(vec![
-        doc! {
-            "$group": {
-                "_id": "$color",
-                "count": { "$sum": 1 },
+use polodb_core::{
+    bson::{doc, Document},
+    CollectionT, Database, Result,
+};
+
+fn group_fruits_by_color(db: &Database) -> Result<Vec<Document>> {
+    let fruits = db.collection::<Document>("fruits");
+
+    fruits
+        .aggregate(vec![
+            doc! {
+                "$group": {
+                    "_id": "$color",
+                    "count": { "$sum": 1 },
+                },
             },
-        },
-    ])
-    .run()?
-    .collect::<Result<Vec<Document>>>()?
+        ])
+        .run()?
+        .collect()
+}
 ```
 
 ## $sort
@@ -80,16 +117,25 @@ let result = fruits
 Sorts all input documents and returns them to the pipeline in sorted order.
 
 ```rust
-let result = fruits
-    .aggregate(vec![
-        doc! {
-            "$sort": {
-                "color": 1,
+use polodb_core::{
+    bson::{doc, Document},
+    CollectionT, Database, Result,
+};
+
+fn sort_fruits_by_color(db: &Database) -> Result<Vec<Document>> {
+    let fruits = db.collection::<Document>("fruits");
+
+    fruits
+        .aggregate(vec![
+            doc! {
+                "$sort": {
+                    "color": 1,
+                },
             },
-        },
-    ])
-    .run()?
-    .collect::<Result<Vec<Document>>>()?
+        ])
+        .run()?
+        .collect()
+}
 ```
 
 ## $limit
@@ -97,14 +143,23 @@ let result = fruits
 Limits the number of documents passed to the next stage in the pipeline.
 
 ```rust
-let result = fruits
-    .aggregate(vec![
-        doc! {
-            "$limit": 2,
-        },
-    ])
-    .run()?
-    .collect::<Result<Vec<Document>>>()?
+use polodb_core::{
+    bson::{doc, Document},
+    CollectionT, Database, Result,
+};
+
+fn first_two_fruits(db: &Database) -> Result<Vec<Document>> {
+    let fruits = db.collection::<Document>("fruits");
+
+    fruits
+        .aggregate(vec![
+            doc! {
+                "$limit": 2,
+            },
+        ])
+        .run()?
+        .collect()
+}
 ```
 
 ## $skip
@@ -112,14 +167,23 @@ let result = fruits
 Skips a specified number of documents.
 
 ```rust
-let result = fruits
-    .aggregate(vec![
-        doc! {
-            "$skip": 1,
-        },
-    ])
-    .run()?
-    .collect::<Result<Vec<Document>>>()?
+use polodb_core::{
+    bson::{doc, Document},
+    CollectionT, Database, Result,
+};
+
+fn skip_first_fruit(db: &Database) -> Result<Vec<Document>> {
+    let fruits = db.collection::<Document>("fruits");
+
+    fruits
+        .aggregate(vec![
+            doc! {
+                "$skip": 1,
+            },
+        ])
+        .run()?
+        .collect()
+}
 ```
 
 ## $addFields
@@ -127,16 +191,25 @@ let result = fruits
 Adds new fields to documents.
 
 ```rust
-let result = fruits
-    .aggregate(vec![
-        doc! {
-            "$addFields": {
-                "newField": "new value",
+use polodb_core::{
+    bson::{doc, Document},
+    CollectionT, Database, Result,
+};
+
+fn add_field_to_fruits(db: &Database) -> Result<Vec<Document>> {
+    let fruits = db.collection::<Document>("fruits");
+
+    fruits
+        .aggregate(vec![
+            doc! {
+                "$addFields": {
+                    "newField": "new value",
+                },
             },
-        },
-    ])
-    .run()?
-    .collect::<Result<Vec<Document>>>()?
+        ])
+        .run()?
+        .collect()
+}
 ```
 
 ## $unset
@@ -144,13 +217,21 @@ let result = fruits
 Removes fields from documents.
 
 ```rust
-let result = fruits
-    .aggregate(vec![
-        doc! {
-            "$unset": "color",
-        },
-    ])
-    .run()?
-    .collect::<Result<Vec<Document>>>()?
-```
+use polodb_core::{
+    bson::{doc, Document},
+    CollectionT, Database, Result,
+};
 
+fn remove_color_field(db: &Database) -> Result<Vec<Document>> {
+    let fruits = db.collection::<Document>("fruits");
+
+    fruits
+        .aggregate(vec![
+            doc! {
+                "$unset": "color",
+            },
+        ])
+        .run()?
+        .collect()
+}
+```

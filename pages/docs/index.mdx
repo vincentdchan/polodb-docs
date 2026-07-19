@@ -1,14 +1,18 @@
 # Introduction
 
-PoloDB is a library written in Rust
-that implements a lightweight [MongoDB](https://www.mongodb.com/).
+PoloDB is an embedded document database written in Rust. It stores BSON
+documents and provides a MongoDB-like API without requiring a separate database
+process.
+
+This documentation targets **PoloDB v5.2.0**.
+Changes available only on the `master` branch are not documented as stable
+features until they are included in a release.
 
 # Why
 
-PoloDB aims to offer a modern alternative to SQLite, which is currently the almost exclusive option for client-side data storage.
-Although SQLite is an old and stable software, it lacks some modern features.
-That's why we developed PoloDB, which is NoSQL, supports multi-threading and multi-sessions,
-and retains the embedded and lightweight features of SQLite.
+PoloDB offers a document-oriented alternative to SQLite for applications that
+need local, persistent data. It combines a MongoDB-like data model with an
+embedded, lightweight Rust API and a RocksDB storage engine.
 
 # Features
 
@@ -16,19 +20,13 @@ and retains the embedded and lightweight features of SQLite.
 - Easy to learn and use
   - NoSQL
   - MongoDB-like API
+- Persistent, RocksDB-backed storage
+- Embedded library and optional standalone server
 - Cross-Platform
-- Multiple backends
-  - Filesystem(WAL)
-  - Memory
-  - IndexedDB(WIP)
 
 # Platform
 
-Theoretically, PoloDB supports all platforms that the Rust compiler
-supports.
-But PoloDB is a personal project currently.
-Limited by my time, I have only compiled and tested on the following platforms:
-
-- macOS Big Sur x64
-- Linux x64 (Tested on Fedora 32)
-- Windows 10 x64
+PoloDB can be built on platforms supported by the Rust and RocksDB toolchains.
+For the standalone server, the
+[v5.2.0 release page](https://github.com/PoloDB/PoloDB/releases/tag/v5.2.0)
+provides prebuilt x64 binaries for macOS, Linux, and Windows.

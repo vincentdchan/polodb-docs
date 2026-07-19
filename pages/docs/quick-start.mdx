@@ -2,16 +2,30 @@ import { Callout } from 'nextra-theme-docs'
 
 # Quick start
 
+This guide targets **PoloDB v5.2.0**.
+
 ## Open a database
 
-
-With the filesystem backend, PoloDB stores data in ONE file.
-All the data are saved persistently on the disk.
+PoloDB stores persistent data in a RocksDB-backed directory. The path passed to
+`open_path` is a database directory, not a single database file.
 
 ```rust
-use polodb_core::Database;
+use polodb_core::{
+    bson::{doc, Document},
+    CollectionT, Database,
+};
 
-let db = Database::open_path("test-polo.db").unwrap();
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let db = Database::open_path("./polodb-data")?;
+    let books = db.collection::<Document>("books");
+
+    books.insert_one(doc! {
+        "title": "1984",
+        "author": "George Orwell",
+    })?;
+
+    Ok(())
+}
 ```
 
 <Callout type="warning" emoji="⚠️">
@@ -23,31 +37,28 @@ let db = Database::open_path("test-polo.db").unwrap();
 ![](./concepts.png)
 
 A **Collection** is a dataset of a kind of data.
-You can use `create_collection` to create a data collection.
-To obtain an exist collection, use the method `collection`.
+Use `collection` to obtain a typed collection handle.
 
 ```rust
-let test_collection = db.collection("test");
-test_collection.insert_one(
+let books = db.collection::<Document>("books");
+books.insert_one(
     doc! { "title": "1984", "author": "George Orwell" },
 )?;
 ```
 
 ## Document
 
-A document is a row of JSON data in PoloDB.
-PoloDB uses an extended JSON which supports extended types such as Data and ObjectID.
+A document is a BSON record in PoloDB. BSON supports additional types such as
+dates, binary data, and object IDs.
 
-PoloDB uses the property `_id` as the primary key of the row of the data.
-If the document doesn't have an id, PoloDB will generate one automatically.
-Internally, PoloDB uses [bson](https://bsonspec.org/) to encode the data, which is small an fast.
+PoloDB uses the `_id` field as the document's primary key. If a document does
+not have an `_id`, PoloDB generates one automatically. Internally, PoloDB uses
+[BSON](https://bsonspec.org/) to encode documents.
 
-An document can be constructed by the macro:
+A document can be constructed with the `doc!` macro:
 
 ```rust
-use polodb_core::bson::doc;
-
 let keys = doc! {
-  "user_id": 1,
+    "user_id": 1,
 };
 ```

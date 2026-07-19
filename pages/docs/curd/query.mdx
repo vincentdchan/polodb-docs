@@ -3,38 +3,44 @@
 ## Find
 
 The `find()` method is used to query a collection for documents that match specific query criteria.
-The `find()` returns a find action and you can call the `run()` method to execute the query.
+It returns a find action; call `run()` to execute the query.
 A cursor is returned that can be used to iterate over the results.
 
-When called with an empty document, the `find()` method returns a cursor pointing to the results.
-You can manipulate the cursor to retrieve the data from the database.
+An empty filter matches every document in the collection.
 
 ```rust
+use polodb_core::bson::doc;
+use polodb_core::{CollectionT, Database};
+use serde::{Deserialize, Serialize};
+
 #[derive(Debug, Serialize, Deserialize)]
 struct Book {
-   title: String,
-   author: String,
+    title: String,
+    author: String,
 }
 
-let db = Database::open_memory()?;
-let collection = db.collection::<Book>("books");
+fn main() -> polodb_core::Result<()> {
+    let db = Database::open_path("./polodb-data")?;
+    let collection = db.collection::<Book>("books");
+    let docs = vec![
+        Book { title: "1984".to_string(), author: "George Orwell".to_string() },
+        Book { title: "Animal Farm".to_string(), author: "George Orwell".to_string() },
+        Book { title: "The Great Gatsby".to_string(), author: "F. Scott Fitzgerald".to_string() },
+    ];
+    collection.insert_many(docs)?;
 
-let docs = vec![
-    Book { title: "1984".to_string(), author: "George Orwell".to_string() },
-    Book { title: "Animal Farm".to_string(), author: "George Orwell".to_string() },
-    Book { title: "The Great Gatsby".to_string(), author: "F. Scott Fitzgerald".to_string() },
-];
-collection.insert_many(docs)?;
+    let books = collection.find(doc! {}).run()?;
+    for book in books {
+        println!("book: {:?}", book?);
+    }
 
-let books = collection.find(doc! {}).run()?;
-for book in books {
-    println!("name: {:?}", book);
+    Ok(())
 }
 ```
 
-**Example:**
-
-If we want to find a book written by George Orwell, we can find using the author's name like this:
+The following snippets use the `collection` value and imports from the complete
+example above. To find books written by George Orwell, filter by the author's
+name:
 
 ```rust
 let books = collection.find(doc! {
@@ -42,11 +48,11 @@ let books = collection.find(doc! {
 }).run()?;
 
 for book in books {
-    println!("name: {:?}", book);
+    println!("book: {:?}", book?);
 }
 ```
 
-If you only want to find the first result match the filter, use `find_one`:
+If you only want the first result that matches the filter, use `find_one`:
 
 ```rust
 let book = collection.find_one(doc! {
@@ -79,7 +85,7 @@ let books = collection
     .limit(1)
     .run()?;
 for book in books {
-    println!("name: {:?}", book);
+    println!("book: {:?}", book?);
 }
 ```
 
@@ -103,7 +109,7 @@ Using the `$or` operator, you can specify a compound query that joins each claus
 so that the query selects the documents in the collection that match at least one condition.
 
 ```rust
-let result = typed_collection
+let books = collection
     .find(doc! {
         "$or": [
             {
@@ -114,8 +120,11 @@ let result = typed_collection
             }
         ]
     })
-    .run()?
-    .collect::<Result<Vec<Document>>>()?;
+    .run()?;
+
+for book in books {
+    println!("book: {:?}", book?);
+}
 ```
 
 ## Advanced conditions
@@ -130,7 +139,7 @@ let result = typed_collection
 | $lte   | Matches values that are less than or equal to a specified value.    |
 | $ne    | Matches all values that are not equal to a specified value.         |
 | $nin   | Matches none of the values specified in an array.                   |
-| $regex | Matches values that are equal to the given regular expression.      |
+| $regex | Matches strings against the given regular expression.              |
 
 ### Specify `EQ` and `NE` Condition
 
@@ -176,7 +185,8 @@ collection.find(doc! {
 }).run()?;
 ```
 
-The above query is specifying the `age` field must in the provided `int slice`.
+The above query specifies that the `age` field must equal one of the values in
+the provided array.
 
 ```rust
 collection.find(doc! {
@@ -184,7 +194,8 @@ collection.find(doc! {
 }).run()?;
 ```
 
-While this one is specifying the `age` field must not be equal to one of the values inside the `int slice`.
+This query specifies that the `age` field must not equal any value in the
+provided array.
 
 ### Specify `LT` and `LTE` Conditions
 
@@ -207,10 +218,12 @@ While this one is specifying the `age` field must be less or equal to `18`
 ### Specify `REGEX` Condition
 
 ```rust
+use polodb_core::bson::{doc, Regex};
+
 collection.find(doc! {
-    "title": { "regex": polodb_core::bson::Regex {
-        "pattern": "\w*Ring\w*",
-        "options": "i",
+    "title": { "$regex": Regex {
+        pattern: r"\w*Ring\w*".into(),
+        options: "i".into(),
     }}
 }).run()?;
 ```
