@@ -1,11 +1,24 @@
 # Delete
 
-The `delete()` method is used to removes all documents that match the filter from a collection.
+Use `delete_one` to delete at most one matching document, or `delete_many` to
+delete every matching document. Both methods return a `DeleteResult`; its
+`deleted_count` field reports how many documents were removed.
 
 ```rust
-let deleted_result = collection.delete_many(doc!{
-    "_id": key,
-})?;
+use polodb_core::bson::{doc, Document};
+use polodb_core::{CollectionT, Database};
+
+fn main() -> polodb_core::Result<()> {
+    let db = Database::open_path("./polodb-data")?;
+    let collection = db.collection::<Document>("books");
+
+    let result = collection.delete_many(doc! {
+        "author": "George Orwell",
+    })?;
+
+    println!("deleted: {}", result.deleted_count);
+    Ok(())
+}
 ```
 
 ## Condition
@@ -20,6 +33,6 @@ let deleted_result = collection.delete_many(doc!{
 | $lte   | Matches values that are less than or equal to a specified value.    |
 | $ne    | Matches all values that are not equal to a specified value.         |
 | $nin   | Matches none of the values specified in an array.                   |
-| $regex | Matches values that are equal to the given regular expression.      |
+| $regex | Matches strings against the given regular expression.              |
 
-Those conditions are the same listed in the [Advanced conditions](https://www.polodb.org/docs/curd/query#advanced-condition).
+These conditions are the same as those listed under [Advanced conditions](/docs/curd/query#advanced-conditions).

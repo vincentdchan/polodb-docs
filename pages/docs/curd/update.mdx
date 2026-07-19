@@ -1,17 +1,33 @@
 # Update
 
-The `update()` method is used to modify an existing document or documents in a collection.
+Use `update_one` to update at most one matching document, or `update_many` to
+update every matching document. Both methods return an `UpdateResult` with
+`matched_count` and `modified_count` fields.
 
 ```rust
-let collection = db.collection::<Document>("config");
-collection.update_many(doc! {
-    "_id": "c2"
-}, doc! {
-    "$set": doc! {
-        "value": "c33",
-    },
-})?;
+use polodb_core::bson::{doc, Document};
+use polodb_core::{CollectionT, Database};
+
+fn main() -> polodb_core::Result<()> {
+    let db = Database::open_path("./polodb-data")?;
+    let collection = db.collection::<Document>("config");
+
+    let result = collection.update_one(
+        doc! { "_id": "c2" },
+        doc! { "$set": { "value": "c33" } },
+    )?;
+
+    println!(
+        "matched: {}, modified: {}",
+        result.matched_count,
+        result.modified_count,
+    );
+    Ok(())
+}
 ```
+
+To apply the same update to every matching document, use `update_many` with the
+same filter and update document.
 
 ## Operations
 

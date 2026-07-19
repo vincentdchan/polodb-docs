@@ -62,7 +62,8 @@ const theme = createTheme({
   },
 });
 
-const description = "An embedded document database written in Rust.";
+const description =
+  "A Rust document database for embedded applications and standalone deployments.";
 
 interface PlatformCardProps {
   title: string;
@@ -261,7 +262,7 @@ export default function () {
   return (
     <ThemeProvider theme={theme}>
       <Head>
-        <title>PoloDB - An embedded JSON database</title>
+        <title>PoloDB - A Rust document database</title>
         <link rel="shortcut icon" href="/static/favicon.ico" />
         <meta name="description" content={description} />
       </Head>
@@ -356,14 +357,14 @@ export default function () {
                     }}
                   />
                 }
-                title="Lightweight"
+                title="Embedded Rust API"
                 description={
                   <>
-                    Only cost ~500kb memory to serve a database.
+                    Use PoloDB directly as a Rust library.
                     <br />
-                    No standalone processes.
+                    No separate database process is required in embedded mode.
                     <br />
-                    No cross-process calls.
+                    Persist data in a local RocksDB-backed directory.
                   </>
                 }
               />
@@ -381,11 +382,11 @@ export default function () {
                 title="MongoDB-like API"
                 description={
                   <>
-                    NoSQL.
+                    Store schemaless, document-oriented data.
                     <br />
-                    Easy to learn and use.
+                    Use familiar queries and update operators.
                     <br />
-                    API is aligned with MongoDB.
+                    The Rust API follows MongoDB-style concepts.
                   </>
                 }
               />
@@ -400,14 +401,14 @@ export default function () {
                     }}
                   />
                 }
-                title="Portable"
+                title="Flexible deployment"
                 description={
                   <>
-                    Cross-Platform.
+                    Embed PoloDB in a Rust application.
                     <br />
-                    Multiple backends.
+                    Or run the standalone MongoDB-compatible server.
                     <br />
-                    Various language bindings.
+                    Both deployment modes use RocksDB storage.
                   </>
                 }
               />

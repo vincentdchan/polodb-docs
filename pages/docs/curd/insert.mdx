@@ -1,18 +1,22 @@
 # Insert
 
-To insert a document, invoke the `insert` method.
-After the document is inserted, an `InsertResult` struct will be returned.
-If you don't provide a primary key, the database will create one for you and obtain it in the result.
+Use `insert_one` to insert one document. It returns an `InsertOneResult` whose
+`inserted_id` field contains the document's primary key. If the document does
+not contain an `_id` field, PoloDB generates one.
 
-You can also use the `insert_many` method to insert multiple documents at once.
+Use `insert_many` to insert multiple documents at once. It returns an
+`InsertManyResult` whose `inserted_ids` field maps each input position to its
+primary key.
 
 ## Insert one item
 
-Insert a struct which implements `serde::Serialize`;
+A collection can be parameterized with any type that implements
+`serde::Serialize`. Deriving `serde::Deserialize` as well lets the same type be
+used for queries.
 
 ```rust
-use polodb_core::Database;
-use serde::{Serialize, Deserialize};
+use polodb_core::{CollectionT, Database};
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]
 struct Book {
@@ -20,52 +24,37 @@ struct Book {
     author: String,
 }
 
-let db = Database::open_file(db_path)?;
-let collection = db.collection("books");
-collection.insert_one(Book {
-    title: "The Three-Body Problem".to_string(),
-    author: "Liu Cixin".to_string(),
-})?;
+fn main() -> polodb_core::Result<()> {
+    let db = Database::open_path("./polodb-data")?;
+    let collection = db.collection::<Book>("books");
+
+    let result = collection.insert_one(Book {
+        title: "The Three-Body Problem".to_string(),
+        author: "Liu Cixin".to_string(),
+    })?;
+
+    println!("inserted id: {:?}", result.inserted_id);
+    Ok(())
+}
 ```
 
 ## Insert many items
 
 ```rust
-use polodb_core::bson::{Document, doc};
-use serde::{Deserialize, Serialize};
+use polodb_core::bson::{doc, Document};
+use polodb_core::{CollectionT, Database};
 
-// Get a handle to a collection of `Book`.
-let typed_collection = db.collection::<Document>("books");
+fn main() -> polodb_core::Result<()> {
+    let db = Database::open_path("./polodb-data")?;
+    let collection = db.collection::<Document>("books");
+    let docs = vec![
+        doc! { "title": "1984", "author": "George Orwell" },
+        doc! { "title": "Animal Farm", "author": "George Orwell" },
+        doc! { "title": "The Great Gatsby", "author": "F. Scott Fitzgerald" },
+    ];
 
-let docs = vec![
-    doc! { "title": "1984", "author": "George Orwell" },
-    doc! { "title": "Animal Farm", "author": "George Orwell" },
-    doc! { "title": "The Great Gatsby", "author": "F. Scott Fitzgerald" },
-];
-
-// Insert some documents into the "mydb.books" collection.
-typed_collection.insert_many(docs)?;
-```
-
-A Collection can be parameterized with any type that implements the Serialize and Deserialize traits from the serde crate, not just Document:
-
-```rust
-use serde::{Deserialize, Serialize};
-
-// Get a handle to a collection of `Book`.
-let typed_collection = db.collection::<Book>("books");
-
-let books = vec![
-    Book {
-        title: "The Grapes of Wrath".to_string(),
-        author: "John Steinbeck".to_string(),
-    },
-    Book {
-        title: "To Kill a Mockingbird".to_string(),
-        author: "Harper Lee".to_string(),
-    },
-];
-
-// Insert the books into "mydb.books" collection, no manual conversion to BSON necessary.
-typed_collection.insert_many(books)?;
+    let result = collection.insert_many(docs)?;
+    println!("inserted ids: {:?}", result.inserted_ids);
+    Ok(())
+}
 ```

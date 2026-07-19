@@ -1,40 +1,34 @@
 
 # Transactions
 
-A transaction symbolizes a unit of work.
-In PoloDB, an operation on a single document is atomic.
+A transaction is a unit of work. By default, each collection operation runs in
+an automatically managed transaction.
 
-For situations that require atomicity of reads and writes to multiple documents (in a single or multiple collections),
-PoloDB supports multi-document transactions. 
+When reads and writes across multiple documents or collections must be atomic,
+start a transaction explicitly with `Database::start_transaction`. Get each
+collection from the transaction, perform the operations, and then call `commit`.
+Call `rollback` instead when the changes should be discarded.
 
 ## Transactions API
 
-
-This example highlights the key components of the transactions API.
-In particular, it uses the API with `_session` suffix.
-The callback API:
-
-- starts a transaction
-- executes the specified operations
-- commits the result (or aborts on error)
-
 ```rust
-use polodb_core::Database;
-use polodb_core::bson::{Document, doc};
-let db = Database::open_file(db_path).unwrap();
+use polodb_core::bson::{doc, Document};
+use polodb_core::{CollectionT, Database};
 
-let txn = db.start_transaction().unwrap();
+fn main() -> polodb_core::Result<()> {
+    let db = Database::open_path("./polodb-data")?;
+    let txn = db.start_transaction()?;
 
-// the collection is associated with the transaction
-let collection = txn.collection::<Document>("books");
+    // Collections obtained from `txn` participate in this transaction.
+    let collection = txn.collection::<Document>("books");
+    let docs = vec![
+        doc! { "title": "1984", "author": "George Orwell" },
+        doc! { "title": "Animal Farm", "author": "George Orwell" },
+        doc! { "title": "The Great Gatsby", "author": "F. Scott Fitzgerald" },
+    ];
+    collection.insert_many(docs)?;
 
-let docs = vec![
-    doc! { "title": "1984", "author": "George Orwell" },
-    doc! { "title": "Animal Farm", "author": "George Orwell" },
-    doc! { "title": "The Great Gatsby", "author": "F. Scott Fitzgerald" },
-];
-collection.insert_many(docs).unwrap();
-
-txn.commit().unwrap();
+    txn.commit()?;
+    Ok(())
+}
 ```
-
