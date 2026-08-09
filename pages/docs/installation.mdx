@@ -1,13 +1,13 @@
 # Installation
 
-These instructions install **PoloDB v5.2.0**.
+These instructions install **PoloDB v5.3.0**.
 
 ## Install as an embedded database
 
 Run the following Cargo command in your project directory:
 
 ```sh
-cargo add polodb_core@5.2.0
+cargo add polodb_core@5.3.0
 ```
 
 To use typed Rust structs with the examples in this documentation, add Serde
@@ -20,17 +20,23 @@ cargo add serde --features derive
 The embedded library stores data persistently in a RocksDB-backed directory and
 does not require a standalone database process.
 
+PoloDB v5 builds the bundled RocksDB backend from source. The first build can
+take several minutes and requires a Rust toolchain, a C/C++ build toolchain,
+Clang/libclang, and the platform C headers. Windows builds are continuously
+tested with the MSVC toolchain; MinGW is not currently part of the supported CI
+matrix.
+
 ## Install as a standalone database
 
 Install the `polodb` executable with Cargo:
 
 ```sh
-cargo install polodb --version 5.2.0
+cargo install polodb --version 5.3.0
 ```
 
 Alternatively, download a prebuilt x64 executable for macOS, Linux, or Windows
 from the
-[v5.2.0 release page](https://github.com/PoloDB/PoloDB/releases/tag/v5.2.0)
+[v5.3.0 release page](https://github.com/PoloDB/PoloDB/releases/tag/v5.3.0)
 and place it on your `PATH`.
 
 Start the server with a persistent database directory:
@@ -45,6 +51,9 @@ using this URI:
 ```text
 mongodb://localhost:27017
 ```
+
+The standalone server supports a subset of the MongoDB wire protocol. It is not
+a drop-in replacement for a full MongoDB server.
 
 Use `--host` and `--port` to change the listening address:
 

@@ -406,7 +406,8 @@ export default function () {
                   <>
                     Embed PoloDB in a Rust application.
                     <br />
-                    Or run the standalone MongoDB-compatible server.
+                    Or run the standalone server with partial MongoDB wire
+                    protocol compatibility.
                     <br />
                     Both deployment modes use RocksDB storage.
                   </>
